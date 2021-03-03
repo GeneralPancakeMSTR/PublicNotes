@@ -18,7 +18,7 @@
     ```
     (East,North,West,South)=(-118.174644,36.874371,-118.567680,36.559962)
     ```        
-- Download this image (or make your own)
+- Download this image (or make your own) (yes, it's there, it's an empty white box. Just right-click in the middle of the empty space and select `Save image as...`.)
 
   <img src="attachments\height-map-displacement-with-satellite-imagery\Boundary.png" width=""/>
   
@@ -39,33 +39,33 @@
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-19-28-04.png" width=""/>
 
 - You should have something like this
-<img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-21-42-01.png" width=""/>
+  <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-21-42-01.png" width=""/>
 
-- Click `Print` on the toolbar 
+- Click `Print` on the toolbar
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-19-30-08.png" width=""/>
 
-- Turn off any unnecessary garbage by toggling it in the `Map Options` dropdown 
+- Turn off any unnecessary garbage by toggling it in the `Map Options` dropdown
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-19-31-08.png" width=""/>
 
 - Save a .pdf image of the region using `Print...` or `Save PDF...`. If you have [Adobe Acrobat](http://dylanbrowndesigns.com/tutorials/how-to-save-or-print-high-resolution-images-from-google-earth/#:~:text=Open%20Google%20Earth's%20print%20option,a%20PDF%20print%20driver%20installed.) or whatever, you can control the resolution of the section you are saving, I  think. I do not, but I found a workaround. 
 
-- If you have photoshop, open the pdf with that and set the `dpi` to `600`. I think this extracts more resolution from the pdf. Or I'm full of shit, not sure which, to be honest. 
+- If you have photoshop, open the pdf with that and set the `dpi` to `600`. I think this extracts more resolution from the pdf. Or I'm full of shit, not sure which, to be honest.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-19-37-28.png" width=""/>
 
 - Now crop the opened image to the boundary of the overlaid square, and save the image as a .png.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-21-45-15.png" width=""/>
   Neat trick: if you hold `Alt` while scrolling in crop-mode, you can zoom in and actually see the goddamned boundary. 
 
-- Open Blender. Enable experimental features under the renderer 
+- Open Blender. Enable experimental features under the renderer
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-12-53.png" width=""/>  
 
-- Create a plane, add a `Subdivision` modifier to it, set it to `Simple`, and check the `Adaptive Subdivision` checkbox. 
+- Create a plane, add a `Subdivision` modifier to it, set it to `Simple`, and check the `Adaptive Subdivision` checkbox.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-14-41.png" width=""/>
 
 - Create a material for the plane, and under `Settings`, set `Displacement` to `Displacement Only`
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-28-10.png" width=""/>
 
-- Open the Shader editor, add a `Displacement` node, drag the png labelled `Merged` into it from the height maps downloaded from Terrain Party, and set the image node to `Cubic` interpolation and `Non-Color` mode; set the `Displacement` node scale to something reasonable. 
+- Open the Shader editor, add a `Displacement` node, drag the png labelled `Merged` into it from the height maps downloaded from Terrain Party, and set the image node to `Cubic` interpolation and `Non-Color` mode; set the `Displacement` node scale to something reasonable.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-56-56.png" width=""/>
   Note that the `Cubic` interpolation mode smooths out the height map a bit (at the expense of a little detail)
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-58-58.png" width=""/>
@@ -74,12 +74,12 @@
 - Congrats! Now you have some terrain. Open the UV Editor and scale the unwrapped plane down just a touch so that it's within the height map's boundary. This fixes the vertical shearing at the edges.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-09-02-02.png" width=""/>
 
-- Go back to the node editor, drag in the cropped terrain imagery, and pass it into the `Principled BSDF`'s `Base Color` input. 
+- Go back to the node editor, drag in the cropped terrain imagery, and pass it into the `Principled BSDF`'s `Base Color` input.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-09-07-04.png" width=""/>
 
 - And there you go, as far as this tutorial is concerned. The rest is up to you. Add an HDRI, or otherwise light things how you want, and go wild. 
 
-- The results are kind of amazing 
+- The results are kind of amazing
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-22-10-11.png" width=""/>
   Still, probably best used at a reasonably distance. 
 
