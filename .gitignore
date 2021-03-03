@@ -1,0 +1,11 @@
+# Ignore Everything 
+# !attachements/
+# attachements/*
+# attachements/*
+
+# Except
+!.gitignore
+# !README.md
+
+
+
