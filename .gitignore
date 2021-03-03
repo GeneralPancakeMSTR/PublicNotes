@@ -1,11 +1,14 @@
+!.gitignore
+!README.md
+
 # Ignore Everything 
-# !attachements/
-# attachements/*
-# attachements/*
+# See: https://stackoverflow.com/a/14422549/2391876
+/*
+!/attachments
+/attachments/*
+
+# Make Public
+!/attachments/height-map-displacement-with-satellite-imagery
+!height-map-displacement-with-satellite-imagery.md
 
 # Except
-!.gitignore
-# !README.md
-
-
-
