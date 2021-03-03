@@ -41,7 +41,7 @@
 - You should have something like this
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-21-42-01.png" width=""/>
 
-- Click `Print` on the toolbar
+- Click `Print` on the toolbar 
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-19-30-08.png" width=""/>
 
 - Turn off any unnecessary garbage by toggling it in the `Map Options` dropdown
@@ -54,12 +54,12 @@
 
 - Now crop the opened image to the boundary of the overlaid square, and save the image as a .png.
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-01-21-45-15.png" width=""/>
-  Neat trick: if you hold `Alt` while scrolling in crop-mode, you can zoom in and actually see the goddamned boundary. 
+  Neat trick: if you hold `Alt` while scrolling in crop-mode, you can zoom in and actually see the goddamned boundary.
 
 - Open Blender. Enable experimental features under the renderer
-  <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-12-53.png" width=""/>  
+  <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-12-53.png" width=""/>
 
-- Create a plane, add a `Subdivision` modifier to it, set it to `Simple`, and check the `Adaptive Subdivision` checkbox.
+- Create a plane, add a `Subdivision` modifier to it, set it to `Simple`, and check the `Adaptive Subdivision` checkbox.    
   <img src="attachments/height-map-displacement-with-satellite-imagery/2021-03-02-08-14-41.png" width=""/>
 
 - Create a material for the plane, and under `Settings`, set `Displacement` to `Displacement Only`
