@@ -4,13 +4,19 @@
 What this is: 
 - How to convert [Structure Synth "Eisenscripts (ES)"](http://structuresynth.sourceforge.net/reference.php) into Sverchock Generative Node-readable XML rulesets and demonstration. 
 - Creating a tree-like structure using the Generative Node from a Structure Synth ES converted to XML, and doing some Sverchok "stuff" to it to get a useful assembly for doing artwork on (**image here, maybe**).
+
+    <img src="attachments/lsystems/2021-09-24-08-42-38.png" width="500"/>
+
 - Reference to an absolute goldmine of Structure Synth examples. 
 
 What this is *not*:
 - How to convert an arbitrary shape *into* a ruleset.
-- I don't know how this is done, really, and I'm as confused as anyone looking at rulesets trying to figure out what they mean. `confused_julia_roberts.jpeg` 
+- I don't know how this is done, really, and I'm as confused as anyone looking at rulesets trying to figure out what they mean. `confused_julia_roberts.jpeg`
+    <img src="attachments/lsystems/confused_not_julia_roberts.jpg" width=""/>
+
 - You can try to read [Algorithmic Beauty of Plants](http://algorithmicbotany.org/papers/abop/abop.pd), etc.; my current record is "still somewhere in the first chapter."
     <img src="attachments/lsystems/2021-09-17-09-37-05.png" width=""/>
+
     I mean honestly, if anyone knows the secrets to happiness, it's clearly this man. 
 
 If you stick around, I'll babble endlessly about: 
@@ -112,8 +118,6 @@ In text form:
     ...
 </rules>
 ```
-
-
 
 ## EisenScript to Sverchok XML Conversion
 Next is how to translate a structure synth ruleset/EisenScript into the xml format used by Sverchok's generative art node. The best way to do this is probably to just pull up an EisenScript and point out directly how each element translates to XML. Consider the sample rule: 
@@ -240,7 +244,7 @@ Okay great, this is a good start. But the fractal tree we have, while interestin
 <img src="attachments/lsystems/2021-09-22-09-10-46.png" width=""/>
 
 ### **Matrix Per Segment** 
-Once I got to this point originally, one of the first things I wanted to do was place objects at the tree's endpoints. You know, as leaves, or whatever. We can sort of achieve this pretty quickly, but using the endpoints (vertices of) the line segments we are using to draw the tree as the positions to place some generated object. 
+Once I got to this point originally, one of the first things I wanted to do was place objects at the tree's endpoints. You know, as leaves, or whatever. We can sort of achieve this pretty quickly, by using the endpoints (vertices of) the line segments we are using to draw the tree as the positions to place some generated object. 
 
 - Apply Generative Art Matrix to line vertices and edges, to create position-only vertices for each segment's endpoints. 
 - Pass the matrix-applied vertices to the matrix input of a `viewer draw`, to instance whatever shape at those positions. For example, a plane. 
@@ -338,7 +342,7 @@ li = (vi,v{i+1})
 ...
 ```
 
-I.e. 
+or
 
 ```py
        ┌──────┐    ┌──────────────────── v0 ─────────────────────────┐
@@ -356,7 +360,7 @@ And with respect to the actual tree
 
 <img src="attachments/lsystems/2021-09-22-22-59-27.png" width="500"/>
 
-And, ultimately, what we want to do is take the position of the first vertex of each line, and subtract it from the position of its second. In terms of the data we're looking at, something like this: 
+Ultimately, what we want to do is take the position of the first vertex of each line, and subtract it from the position of its second. In terms of the data we're looking at, something like this: 
 
 ```py
 l0 = (v0, v1) -> d0 = v1 - v0 
@@ -367,7 +371,7 @@ li = (v{2xi}, v{2xi+1}) -> di = v{2xi+1} - v{2xi}
 ...
 ```
 
-What we can do is take the whole list of lines that make up the tree, and from each extract just their first index (position zero), using Sverchok's `List Item` node. 
+To achieve this, we may take the whole list of lines that make up the tree, and from each extract just their first index (position zero), using Sverchok's `List Item` node. 
 
 - Plug matrix-applied line edges into `List Item` node, set to level 3, index 0, Flatten and Wrap (note you have to turn those extra options on explicitly, a must), and show the output. 
 
@@ -420,7 +424,7 @@ So, what do we have Now? A jumble of matrices at the origin.
 
 <img src="attachments/lsystems/2021-09-23-21-12-23.png" width=""/>
 
-Why aren't they attached to the tree's endpoints? Because they don't inherently know that information. All they "know" is a direction, and are defaulting to the world origin for their position. 
+Why aren't the matrices positioned at the tree's endpoints? Because they don't inherently know that information. All they "know" is a direction, and are defaulting to the world origin for their position. 
 
 This is easy to solve, though, just pass the endpoint vertices into the `Matrix normal` node's `Location` input (also, scale the matrices down, so that we can see what's going on). 
 
@@ -450,7 +454,7 @@ Path Length:SegmentLength =
     ...
 ```
 
-We have exactly as many line segments as vertices, and the segment lengths should match up perfectly, so let's just see what happens when we plug the path lengths in as a scale on our direction matrices? 
+We have exactly as many line segments as orientation matrices, so the segment *lengths* should map directly to them. Let's start by seeing what happens when we plug the path lengths in as a scale on our direction matrices. 
 
 - Create `Matrix Multiply` node, pass direction matrices into input `A`, create a new matrix for input `B`, pass segment lengths into scale of new matrix, and pass multiplied matrix into viewer. We can also add an additional scaling matrix into input `C`. 
 
@@ -471,7 +475,7 @@ If we set this `Z` value/offset to be half of the length of the line segment, th
 - Oh, right, you can't just plug a scaler into a vector input. Create a, confusingly, vector...in node? I can never remember. 
 - Pass scaled segments into `Z`, and leave `X` and `Y` at 0. 
 - Right, classic. Why aren't they in the middle? I ran into this problem before. It's because we are scaling the matrices before hand (by the segment lengths). This affects how far it moves for a given distance input. 
-- So the best way to resolve this is to apply the position  change along the segment *before* the scale change. 
+- So the best way to resolve this is to apply the position change that moves the orientation matrices along their segment *before* the scale change that makes them smaller as they go up the tree. 
 - Remove the scaled segment lengths from the `Matrix Multiply`'s `B` input. 
 - Divide the segments in half, pass them into the `Z` input a `Vector in`, and pass this into the `Location` input of a new matrix multiplying the Direction Matrices. 
 - Then, take the previous `Matrix In`,  scaled by the segment lengths, and multiply the offset matrices by this. 
@@ -496,8 +500,7 @@ So first of all, we can now instance whatever onto each oriented, offset, and sc
 <img src="attachments/lsystems/2021-09-23-22-09-55.png" width="500"/>
 
 Another good one is going back to our original matrix output (the one from our `Generative Art` node), and using those matrices to instance an object. For example, a tapered cylinder (particularly, at the ruleset's scale factor). 
-
-
+ 
 <img src="attachments/lsystems/2021-09-23-22-20-29.png" width=""/>
 
 This is actually as important as anything I've discussed so far, and is sometimes the simplest way to what you might be after: 
@@ -512,255 +515,12 @@ Or, play with before hand, but not necessarily explicitly add to this tutorial.
 ### **Other Comments**
 - [ ] Motivation. 
 - [ ] Early experiments, frustrations, trying to understand things. 
+- [ ] Skin modifier, which sort of works. Kinda creepy, though, honestly. 
 
-# Converted Rules
-```xml
-<!-- Structure Synth Torus Example -->
-<rules max_depth="100">
-    <rule name="entry">
-        <call rule="r1"/>
-        <call count="36" transforms="tx -2 ry 10" rule="r1"/>
-    </rule>
-    <rule name="r1" max_depth="10">
-        <call count="2" transforms="ty -1" rule="r2"/>
-        <call count="3" transforms="rz 15 tx 1" rule="r2"/>
-        <call transforms="ty 1 rx 36" rule="r2"/>
-    </rule>
-    <rule name="r2">
-        <call count="2" transforms="ty -1" rule="r2"/>
-        <call count="3" transforms="rz 15 tx 1" rule="r2"/>
-        <instance transforms="s .9 .1 1.1" shape="vertex"/>
-    </rule>
-    <rule name="r2" weight="200">       
-        <instance transforms="s .1 .9 1.1" shape="vertex"/>
-    </rule>
-</rules> 
-```
+[[lsystems_part2]]
+[[lsystems_conversions]]
 
-```xml
-<!-- Ankur Pawar Spiral Tree 2 -->
-<rules max_depth="520">
-    <rule name="entry">
-        <call rule="stem"/>
-        <call rule="spiral"/>        
-        <call transforms="ry 180" rule="spiral"/>
-    </rule>
-    <rule name="stem" max_depth="20">
-        <instance transforms="s .9 .1 1.1" shape="vertex"/>
-        <call transforms="ty -1" rule="stem"/>
-    </rule>
-    <rule name="spiral">
-        <call rule="spiral"/>
-        <call transforms="ry 180" rule="spiral"/>
-    </rule>
-    <rule name="spiral" weight="50" max_depth="100" successor="leaf">
-        <call transforms="ty .4 rz 3 sa .993" rule="spiral"/>
-        <instance shape="vertex"/>
-    </rule>
-    <rule name="spiral" weight="30" max_depth="300" successor="leaf">
-        <call transforms="ty .4 rz 3 sa .995" rule="spiral"/>
-        <instance shape="vertex"/>
-    </rule>
-    <rule name="leaf">
-        <instance transforms="s 3.5 3.5 .75 rz 30" shape="vertex"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- Ankur Pawar [Pythagoras Tree](https://github.com/ankurpawar/StructureSynth/blob/master/Pythagoras/PythagorasTree.es) -->
-<rules max_depth="12">
-    <rule name="entry">
-        <call rule="R1"/>
-    </rule>
-    <rule name="R1" max_depth="11">
-        <call transforms="ty 2 tx 2 rz -45 sa .707" rule="R1"/>
-        <call transforms="ty 2 tx -2 rz 45 sa .707" rule="R1"/>
-        <instance shape="vertex"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- Ankur Pawar [Pythagoras Tree](https://github.com/ankurpawar/StructureSynth/blob/master/Pythagoras/PythagorasTree.es) -->
-<rules max_depth="12">
-    <rule name="entry">
-        <call rule="a2"/>
-    </rule>
-    <rule name="a2" weight="3" max_depth="3" successor="d">
-        <call transforms="sa .5 tx .5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx .5 ty -.5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty -.5" rule="a2"/>
-    </rule>
-    <rule name="a2" weight="1" max_depth="1" successor="d">
-        <call transforms="s .5 1 tx .5" rule="a2"/>
-        <call transforms="s .5 1 tx .5" rule="a2"/>
-    </rule>
-    <rule name="d" max_depth="11">
-        <instance transforms="s 1 1 .25" shape="vertex"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- Ankur Pawar [ChipNew2](https://github.com/ankurpawar/StructureSynth/blob/master/Chip/ChipNew2.es) -->
-<!-- Experiment with max_depth on first two rules. Small numbers, <10.  -->
-<rules max_depth="200">
-    <constants depth="3"/>
-    <rule name="entry">
-        <call rule="a2"/>
-    </rule>
-    <rule name="a2" weight="3" max_depth="3" successor="d">
-        <call transforms="sa .5 tx .5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx .5 ty -.5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty -.5" rule="a2"/>
-    </rule>
-    <rule name="a2" weight="3" max_depth="2" successor="d">
-        <call transforms="sa .5 tx .5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty .5" rule="a2"/>
-        <call transforms="sa .5 tx .5 ty -.5" rule="a2"/>
-        <call transforms="sa .5 tx -.5 ty -.5" rule="a2"/>
-    </rule>
-    <rule name="a2" weight="1" max_depth="1" successor="d">
-        <call transforms="s .5 1 tx .5" rule="a2"/>
-        <call transforms="s .5 1 tx .5" rule="a2"/>
-    </rule>
-    <rule name="d" weight="2">
-        <instance transforms="s 1 1 .25" shape="box"/>
-    </rule>
-</rules> 
-```
-Amazing (output-> mesh viewer-> bevel)
-<img src="attachments/lsystems/2021-09-19-09-50-53.png" width="750"/>
-
-```xml
-<!-- [pytree3d](https://github.com/ankurpawar/StructureSynth/blob/master/Pythagoras/pytree3d.es) -->
-<!-- Excellent. -->
-<rules max_depth="200">
-    <constants displace=".25"/>
-    <rule name="entry">
-        <call rule="R1"/>
-    </rule>
-    <rule name="R1" max_depth="5" successor="R2">
-        <call transforms="ty .75 tx {displace} rz -45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tx -{displace} rz 45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tz {displace} rx 45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tz -{displace} rx -45 sa .707" rule="R1"/>
-        <instance transforms="s .1 1 .1" shape="vertex"/>
-    </rule>
-    <rule name="R2">
-        <instance transforms="s .1 1 .1" shape="vertex"/>
-        <!-- Comment line below this to suppress matrix at branch endpoint -->
-        <instance transforms="ty .5 sa .5" shape="vertex"/>
-    </rule>
-    <!-- Nothing below here seems to get called? -->
-    <rule name="d">
-        <instance transforms="s .1 .9 .9 tx 5" shape="vertex"/>
-        <instance transforms="s .1 .9 .9 tx -5" shape="vertex"/>
-        <instance transforms="s .9 .1 .9 ty 5" shape="vertex"/>
-        <instance transforms="s .9 .1 .9 ty -5" shape="vertex"/>
-        <instance transforms="s .9 .9 .1 tz 5" shape="vertex"/>
-        <instance transforms="s .9 .9 .1 tz -5" shape="vertex"/>
-    </rule>
-    <rule name="frame">
-        <instance transforms="s .1 1.1 .1 tx 5 tz 5" shape="vertex"/>
-        <instance transforms="s .1 1.1 .1 tx 5 tz -5" shape="vertex"/>
-        <instance transforms="s .1 1.1 .1 tx -5 tz 5" shape="vertex"/>
-        <instance transforms="s .1 1.1 .1 tx -5 tz -5" shape="vertex"/>
-        
-        <instance transforms="s 1 .1 .1 ty 5 tz 5" shape="vertex"/>
-        <instance transforms="s 1 .1 .1 ty 5 tz -5" shape="vertex"/>
-        <instance transforms="s 1 .1 .1 ty -5 tz 5" shape="vertex"/>
-        <instance transforms="s 1 .1 .1 ty -5 tz -5" shape="vertex"/>
-
-        <instance transforms="s .1 .1 1 ty 5 tx 5" shape="vertex"/>
-        <instance transforms="s .1 .1 1 ty 5 tx -5" shape="vertex"/>
-        <instance transforms="s .1 .1 1 ty -5 tx 5" shape="vertex"/>
-        <instance transforms="s .1 .1 1 ty -5 tx -5" shape="vertex"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- [pytree3d](https://github.com/ankurpawar/StructureSynth/blob/master/Pythagoras/pytree3d.es) -->
-<!-- Excellent. -->
-<rules max_depth="200">
-    <constants displace=".25"/>
-    <rule name="entry">
-        <call rule="R1"/>
-    </rule>
-    <rule name="R1" max_depth="5" successor="R2">
-        <call transforms="ty .75 tx {displace} rz -45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tx -{displace} rz 45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tz {displace} rx 45 sa .707" rule="R1"/>
-        <call transforms="ty .75 tz -{displace} rx -45 sa .707" rule="R1"/>
-        <instance transforms="s .1 1 .1" shape="vertex"/>
-    </rule>
-    <rule name="R2">
-        <instance transforms="s .1 1 .1" shape="vertex"/>
-        <!-- Comment line below this to suppress matrix at branch endpoint -->
-        <instance transforms="ty .5 sa .5" shape="vertex"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- Simplification of [3dtree](https://github.com/ankurpawar/StructureSynth/blob/master/Tree/3dtree.es) -->
-<!-- Promising. -->
-<rules max_depth="500">
-    <rule name="entry">
-        <call transforms="ry 90" rule="spiral"/>
-    </rule>
-    <rule name="spiral" weight="100" max_depth="400">
-        <call transforms="ty .2 rx 1 ry 1 sa .993" rule="spiral"/>
-        <instance shape="vertex"/>
-    </rule>
-    <rule name="spiral" weight="1">
-        <call rule="spiral"/>
-        <call transforms="ry 180" rule="spiral"/>
-    </rule>
-</rules> 
-```
-
-```xml
-<!-- Z-up (y->z, z->y) Simplification of [3dtree](https://github.com/ankurpawar/StructureSynth/blob/master/Tree/3dtree.es) -->
-<rules max_depth="500">
-    <rule name="entry">
-        <call transforms="rz 90" rule="spiral"/>
-    </rule>
-    <rule name="spiral" weight="100" max_depth="400">
-        <call transforms="tz .2 rx 1 rz 1 sa .993" rule="spiral"/>
-        <instance shape="vertex"/>
-    </rule>
-    <rule name="spiral" weight="1">
-        <call rule="spiral"/>
-        <call transforms="rz 180" rule="spiral"/>
-    </rule>
-</rules> 
-```
-
-```xml 
-<!-- Tree-like fractalTree -->
-<!-- Vary Angles, Scale. -->
-<rules max_depth="200">
-    <rule name="entry">
-        <call rule="tree"/>
-    </rule>
-    <rule name="tree" max_depth="6">
-        <call transforms="tz .5 sa .49" rule="tree"/>
-        <call transforms="tz .5 sa .49 rx 22.5" rule="tree"/>
-        <call transforms="tz .5 sa .49 rx -40" rule="tree"/>
-        <call transforms="tz .5 sa .49 ry -40" rule="tree"/>
-        <call transforms="tz .5 sa .49 ry 35" rule="tree"/>
-        <call rule="plus"/>
-    </rule>
-    <rule name="plus">
-        <call transforms="tz .25 s 1 1 .25 rx 90" rule="d"/>
-    </rule>
-    <rule name="d">
-        <instance transforms="s .05 2 .05" shape="vertex"/>
-    </rule>
-</rules> 
-```
+[//begin]: # "Autogenerated link references for markdown compatibility"
+[lsystems_part2]: lsystems_part2.md "<u>"
+[lsystems_conversions]: lsystems_conversions.md "lsystems_conversions"
+[//end]: # "Autogenerated link references"
