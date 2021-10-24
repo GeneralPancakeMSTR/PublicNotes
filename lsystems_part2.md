@@ -1,4 +1,19 @@
 # The Merged Endpoints Tree 
+- [The Merged Endpoints Tree](#the-merged-endpoints-tree)
+    - [<u>**Merging the Tree**</u>](#umerging-the-treeu)
+    - [<u>**Why Sort the Merged Path?**</u>](#uwhy-sort-the-merged-pathu)
+    - [<u>**Orientation Matrices Etc.**</u>](#uorientation-matrices-etcu)
+    - [<u>**Locating Endpoints**</u>](#ulocating-endpointsu)
+    - [<u>**Group by distance/steps from endpoint**</u>](#ugroup-by-distancesteps-from-endpointu)
+    - [<u>**Group Matrices by Property (distance from endpoints)**</u>](#ugroup-matrices-by-property-distance-from-endpointsu)
+    - [<u>**Affect Matrices by Group Property (Distance from endpoint)**</u>](#uaffect-matrices-by-group-property-distance-from-endpointu)
+    - [<u>**Instancing Matrix Assemblies on Orientation Matrices**</u>](#uinstancing-matrix-assemblies-on-orientation-matricesu)
+    - [<u>**Summary**</u>](#usummaryu)
+    - [<u>**A few final thoughts**</u>](#ua-few-final-thoughtsu)
+- [Notes](#notes)
+
+
+### <u>**Merging the Tree**</u>
 In Part 1, we were working with an unmerged tree, in the sense that it was made up of a bunch of unconnected lines instanced by the generative art node. While not necessarily a problem we can't work around, it does mean that the tree has double vertices piled on top of each other. 
 
 <img src="attachments/lsystems_part2/2021-10-23-18-16-24.png" width=""/>
