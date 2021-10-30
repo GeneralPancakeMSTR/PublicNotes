@@ -1104,6 +1104,7 @@ Let's quickly go through what we achieved in this discussion, from the point of 
 
 # Notes 
 - You can select and group instanced assemblies directly, but it's better to select and group the orientation matrices first, then instance the assemblies on top of them, because then you can affect both overall instance orientation and the instance sub-matrices by group. 
+- For creating a more complex merged structure, line cylinders, could you instance them on the matrices, then deterministically merge verts? I.e. by selection, instead of by distance? 
 
   
 
