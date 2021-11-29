@@ -1,0 +1,20 @@
+<!-- Tree-like fractalTree -->
+<rules max_depth="200">
+    <rule name="entry">
+        <call rule="tree"/>
+    </rule>
+    <rule name="tree" max_depth="6">
+        <call transforms="tz .5 sa .75" rule="tree"/>
+        <call transforms="tz .5 sa .75 rx 22.5" rule="tree"/>
+        <call transforms="tz .5 sa .75 rx -40" rule="tree"/>
+        <call transforms="tz .5 sa .75 ry -40" rule="tree"/>
+        <call transforms="tz .5 sa .75 ry {angle}" rule="tree"/>
+        <call rule="plus"/>
+    </rule>
+    <rule name="plus">
+        <call transforms="tz .25 s 1 1 .25 rx 90" rule="d"/>
+    </rule>
+    <rule name="d">
+        <instance transforms="s .05 2 .05" shape="vertex"/>
+    </rule>
+</rules> 
