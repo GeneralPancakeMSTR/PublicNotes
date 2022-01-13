@@ -23,9 +23,11 @@
 !/blender_uploads
 !/blender_uploads/*
 
+!index.html
 !/portfolio.html
 !/attachments/portfolio
-!index.html
+!/css
+
 
 !music.md
 
