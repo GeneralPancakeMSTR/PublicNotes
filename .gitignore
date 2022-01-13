@@ -23,6 +23,10 @@
 !/blender_uploads
 !/blender_uploads/*
 
+!/portfolio.md
+!/attachments/portfolio
+!/docs
+
 !music.md
 
 
