@@ -151,9 +151,10 @@ There are a few things I thought would make this more realistic
 - Leaves are not identical, and should have some random variation, both in surface and shape. 
 - Leaves may not grow towards the root of the plant. 
 
-<img src="attachments/portfolio/neighborhood_yucca_cropped_annotated.png" width="500"/>
-
-*A beautiful example of a Yucca that exemplifies some of the features I wanted to include in my model.*
+<img src="attachments/portfolio/neighborhood_yucca_cropped_annotated.png" style="display:block;float:none;margin-left:auto;margin-right:auto;"  width="500"/>
+<div align="center">
+<em>A beautiful example of a Yucca that exemplifies some of the features I wanted to include in my model.</em>
+</div>
 
 I was able to achieve each of these features, although not quickly or trivially. 
 
@@ -172,7 +173,60 @@ This work led to one of my prouder moments of 2021, which was being given the op
 A recreation of this [stream](https://www.youtube.com/watch?v=eq1qc2pnljk) (I failed to record the original with audio) can be found on my youtube channel, along with a [Part 2](https://www.youtube.com/watch?v=dJuDzoXgWuA) that covers some further details. I also have written versions of these videos covering roughly the same material, that may be viewed on my Github ([part 1](https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems.md) and [part 2](https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems_part2.md)).
 
 ## Nodevember
-[Nodevember](https://nodevember.io/) is a community driven challenge that occurs in the month of November (surprise) to use procedural techniques to complete artwork from a daily (or in the case of 2021, bi-daily) prompt. I took a break from the Yucca to make a few pieces for this year's (2021) event, two of which I am especially pleased with. 
+[Nodevember](https://nodevember.io/) is a community driven challenge that occurs in the month of November (surprise) to use procedural techniques to complete artwork from a daily (or in the case of 2021, bi-daily) prompt. I took a break from the Yucca to make a few pieces for this year's (2021) event, two of which I am especially pleased with. Both of these pieces were made largely in Sverchok.
 
 ### Nodevember: "Colors"
+<video height="400" controls>
+    <source src="attachments/portfolio/colors_small.mp4" type=video/mp4>
+</video>
 
+*Colors* was submitted as a single piece for *all* of the set of ["Color" prompts](https://nodevember.io/prompts/), which I chose to do knowing that I would struggle to come up with interesting responses for each individual color. 
+
+The color of the spheres is their XYZ coordinates converted to RGB, my attempt to display the meaning of texture coordinates (e.g. UV), which is an important, and confusing, part of procedural texturing. 
+
+In the limit that the number of spheres goes to infinity and their size to zero, ideally this animation would reproduce the default cube with generated coordinates applied. 
+
+<img src="attachments/portfolio/default_cube_generated.png" width=""/>
+
+*Blender's default cube showing generated texture coordinates.*
+
+<img src="attachments/portfolio/colors_end.png" width=""/>
+
+*The final state of the Colors animation.*
+
+### Nodevember: "Spherical Harmonics"
+<video height="400" controls>      
+    <source src="attachments/portfolio/spherical_harmonics_slow.mp4" type=video/mp4>
+</video>
+
+This piece was a submission for the Nodevember "Tiny" prompt, and is the first few sets of [spherical harmonics](https://en.wikipedia.org/wiki/Spherical_harmonics), plotted in [polar coordinates with magnitude as radius](https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#Polar_Plots_with_Magnitude_as_Radius). 
+
+The animation was created by setting the radius of points on a sphere to expressions for the harmonics ($Y_l^m(\theta,\psi)$, e.g. [$Y_0^0(\theta,\psi)$](https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#%E2%84%93_=_0)), then mixing between equations to transition between the shapes.
+
+Spherical harmonics are a class of special functions ([literally](https://en.wikipedia.org/wiki/Special_functions)) that solve for the [Hydrogen Atom wavefunction](https://en.wikipedia.org/wiki/Hydrogen_atom#Wavefunction)'s angular component, which I figured fell under the category of "tiny." 
+
+## Returning to the Yucca
+Having gotten the leaves working about the way I wanted, the next step for the Yucca from where I left off was giving it a body, or trunk. I had already experimented with relatively simple things, for example instancing cylinders on each segment, or using the skin modifier, but both had issues significant enough that I wanted to explore other approaches. 
+
+<img src="attachments/portfolio/trunk_experiments.png" width=""/>
+
+*Experiments in constructing a trunk (Left: cylinders instanced on each segment; Right: application of the skin modifier), neither satisfactory.*
+
+The approach I wanted to get working was identifying paths of the tree's segments that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm
+
+- Sort the endpoint vertex indexes (which I had previously identified) in descending order. 
+  - This operates under the assumption that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending lengths. 
+  - Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model. 
+- Starting from a tip vertex, move to the line whose tip index is the current line's root index.
+  - This avoids taking an invalid path at junctions because only the originating line has the junction's index as its **tip**, where the other segments share it as their **root**.
+- Repeat this process until the root of the tree, or any segment that was already covered, is reached.
+
+<img src="attachments/portfolio/pathfinding_diagram.png" width=""/>
+
+*Diagram of pathfinding by repeating the process of moving to the line whose tip index is the current line's root index.*
+
+Simple though the algorithm might be, this was *not* easy to implement. But, with a *lot* of effort and troubleshooting, I was able to get it working. 
+
+<img src="attachments/portfolio/paths_gif.gif" width=""/>
+
+*A few of the tip-to-root paths of the Sverchok tree.*

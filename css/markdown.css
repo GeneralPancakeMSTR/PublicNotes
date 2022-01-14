@@ -9,6 +9,7 @@
 	padding: 0 26px;
 	line-height: var(--markdown-line-height, 22px);
 	word-wrap: break-word;
+    zoom:145%;
 }
 
 body {
@@ -17,9 +18,14 @@ body {
     margin-left: 15em;
     margin-right: 15em;
 }
+
 h1, h2, h3, h4, h5, h6,
 p, ol, ul, pre {
 	color: #ffffff;
+}
+
+em {
+    color:#ffffff !important;
 }
 
 /* Reset margin top for elements */
