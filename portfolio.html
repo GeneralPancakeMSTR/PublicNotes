@@ -113,8 +113,8 @@ aside > *:last-child {
 </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
 <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link rel="stylesheet" href="css/markdown.css">
+<link rel="stylesheet" href="css/highlight.css">
 <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
@@ -159,7 +159,7 @@ aside > *:last-child {
 <img src="attachments/portfolio/terrain.png" width=""/>
 <img src="attachments/portfolio/terrain_full.png" width=""/>
 <p><em>Terrain from a simple plane using real-world topographic data as a height map and satellite imagery for  color.</em></p>
-<p>The principle of displacing a plane with topographic data to create terrain is neither mine nor new, but I expanded the idea by figuring out myself how to get the satellite image for the exact same region from Google Earth, which is not something I had seen before. I wrote a tutorial going over the process that can be <a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/height-map-displacement-with-satellite-imagery.html">read on my github</a>.</p>
+<p>The principle of displacing a plane with topographic data to create terrain is neither mine nor new, but I expanded the idea by figuring out myself how to get the satellite image for the exact same region from Google Earth, which is not something I had seen before. I wrote a tutorial going over the process that can be <a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/height-map-displacement-with-satellite-imagery.md">read on my github</a>.</p>
 <h2 id="keycaps-redux-solidworks-and-python">Keycaps Redux, SolidWorks, and Python</h2>
 <p>As an obsessive mechanical keyboard enthusiast, one of my previous projects involved modeling and texturing keycaps for creating custom color themes. Though I had already painstakingly worked on this project in 3DS Max and Fusion 360 (see <a href="#early-work">Early Work</a>), various issues with those programs led me to redo things from scratch early in 2021 with SolidWorks (to model the keycaps) and Blender (for texturing and rendering them).</p>
 <p>Mechanical Keyboard keycaps come in many varying shapes and sizes, but mostly the similarities are enough between them that, for nearly all the unique shapes I needed, I was able to generate them from the same SolidWorks part, provided different parameters.</p>
@@ -237,7 +237,7 @@ aside > *:last-child {
 <img src="attachments/portfolio/leaf_gen_gif.gif" width=""/>
 <p><em>A node group I wrote in Sverchok for randomly generating Yucca leaves.</em></p>
 <p>This work led to one of my prouder moments of 2021, which was being given the opportunity to go over my process to an audience of 3D enthusiasts, some of them professionals, over a virtual stream.</p>
-<p>A recreation of this <a href="https://www.youtube.com/watch?v=eq1qc2pnljk">stream</a> (I failed to record the original with audio) can be found on my youtube channel, along with a <a href="https://www.youtube.com/watch?v=dJuDzoXgWuA">Part 2</a> that covers some further details. I also have written versions of these videos covering roughly the same material, that may be viewed on my Github (<a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems.html">part 1</a> and <a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems_part2.html">part 2</a>).</p>
+<p>A recreation of this <a href="https://www.youtube.com/watch?v=eq1qc2pnljk">stream</a> (I failed to record the original with audio) can be found on my youtube channel, along with a <a href="https://www.youtube.com/watch?v=dJuDzoXgWuA">Part 2</a> that covers some further details. I also have written versions of these videos covering roughly the same material, that may be viewed on my Github (<a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems.md">part 1</a> and <a href="https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems_part2.md">part 2</a>).</p>
 <h2 id="nodevember">Nodevember</h2>
 <p><a href="https://nodevember.io/">Nodevember</a> is a community driven challenge that occurs in the month of November (surprise) to use procedural techniques to complete artwork from a daily (or in the case of 2021, bi-daily) prompt. I took a break from the Yucca to make a few pieces for this year's (2021) event, two of which I am especially pleased with. Both of these pieces were made largely in Sverchok.</p>
 <h3 id="nodevember-colors">Nodevember: &quot;Colors&quot;</h3>
@@ -247,9 +247,9 @@ aside > *:last-child {
 <p><em>Colors</em> was submitted as a single piece for <em>all</em> of the set of <a href="https://nodevember.io/prompts/">&quot;Color&quot; prompts</a>, which I chose to do knowing that I would struggle to come up with interesting responses for each individual color.</p>
 <p>The color of the spheres is their XYZ coordinates converted to RGB, my attempt to display the meaning of texture coordinates (e.g. UV), which is an important, and confusing, part of procedural texturing.</p>
 <p>In the limit that the number of spheres goes to infinity and their size to zero, ideally this animation would reproduce the default cube with generated coordinates applied.</p>
-<img src="attachments/portfolio/2022-01-13-09-36-25.png" width=""/>
+<img src="attachments/portfolio/default_cube_generated.png" width=""/>
 <p><em>Blender's default cube showing generated texture coordinates.</em></p>
-<img src="attachments/portfolio/2022-01-13-09-38-27.png" width=""/>
+<img src="attachments/portfolio/colors_end.png" width=""/>
 <p><em>The final state of the Colors animation.</em></p>
 <h3 id="nodevember-spherical-harmonics">Nodevember: &quot;Spherical Harmonics&quot;</h3>
 <video height="400" controls>      
@@ -259,6 +259,29 @@ aside > *:last-child {
 <p>The animation was created by setting the radius of points on a sphere to expressions for the harmonics (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>Y</mi><mi>l</mi><mi>m</mi></msubsup><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>ψ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_l^m(\theta,\psi)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.033108em;vertical-align:-0.2831079999999999em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4168920000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2831079999999999em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="mclose">)</span></span></span></span></eq>, e.g. <a href="https://en.wikipedia.org/wiki/Table_of_spherical_harmonics#%E2%84%93_=_0"><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>Y</mi><mn>0</mn><mn>0</mn></msubsup><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>ψ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_0^0(\theta,\psi)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">ψ</span><span class="mclose">)</span></span></span></span></eq></a>), then mixing between equations to transition between the shapes.</p>
 <p>Spherical harmonics are a class of special functions (<a href="https://en.wikipedia.org/wiki/Special_functions">literally</a>) that solve for the <a href="https://en.wikipedia.org/wiki/Hydrogen_atom#Wavefunction">Hydrogen Atom wavefunction</a>'s angular component, which I figured fell under the category of &quot;tiny.&quot;</p>
 <h2 id="returning-to-the-yucca">Returning to the Yucca</h2>
+<p>Having gotten the leaves working about the way I wanted, the next step for the Yucca from where I left off was giving it a body, or trunk. I had already experimented with relatively simple things, for example instancing cylinders on each segment, or using the skin modifier, but both had issues significant enough that I wanted to explore other approaches.</p>
+<img src="attachments/portfolio/trunk_experiments.png" width=""/>
+<p><em>Experiments in constructing a trunk (Left: cylinders instanced on each segment; Right: application of the skin modifier), neither satisfactory.</em></p>
+<p>The approach I wanted to get working was identifying paths of the tree's segments that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm</p>
+<ul>
+<li>Sort the endpoint vertex indexes (which I had previously identified) in descending order.
+<ul>
+<li>This operates under the assumption that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending lengths.</li>
+<li>Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model.</li>
+</ul>
+</li>
+<li>Starting from a tip vertex, move to the line whose tip index is the current line's root index.
+<ul>
+<li>This avoids taking an invalid path at junctions because only the originating line has the junction's index as its <strong>tip</strong>, where the other segments share it as their <strong>root</strong>.</li>
+</ul>
+</li>
+<li>Repeat this process until the root of the tree, or any segment that was already covered, is reached.</li>
+</ul>
+<img src="attachments/portfolio/pathfinding_diagram.png" width=""/>
+<p><em>Diagram of pathfinding by repeating the process of moving to the line whose tip index is the current line's root index.</em></p>
+<p>Simple though the algorithm might be, this was <em>not</em> easy to implement. But, with a <em>lot</em> of effort and troubleshooting, I was able to get it working.</p>
+<img src="attachments/portfolio/paths_gif.gif" width=""/>
+<p><em>A few of the tip-to-root paths of the Sverchok tree.</em></p>
 
     </body>
     </html>
