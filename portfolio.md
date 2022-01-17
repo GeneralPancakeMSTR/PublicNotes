@@ -210,14 +210,14 @@ Having gotten the leaves working about the way I wanted, the next step for the Y
 
 <img src="attachments/portfolio/trunk_experiments.png" width=""/>
 
-*Experiments in constructing a trunk (Left: cylinders instanced on each segment; Right: application of the skin modifier), neither satisfactory.*
+*Experiments in constructing a trunk, neither satisfactory (Left: cylinders instanced on each segment; Right: application of the skin modifier).*
 
-The approach I wanted to get working was identifying paths of the tree's segments that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm
+What I wanted to try was identifying segment paths through the tree that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm
 
 - Sort the endpoint vertex indexes (which I had previously identified) in descending order. 
-  - This operates under the assumption that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending lengths. 
-  - Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model. 
-- Starting from a tip vertex, move to the line whose tip index is the current line's root index.
+  - This assumes that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending length. 
+  - Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model by giving it at least one, continuous "trunk" that spans the entire tree. 
+- Starting from a tip vertex, move to the line whose **tip** index is the **current** line's **root** index.
   - This avoids taking an invalid path at junctions because only the originating line has the junction's index as its **tip**, where the other segments share it as their **root**.
 - Repeat this process until the root of the tree, or any segment that was already covered, is reached.
 
@@ -230,3 +230,101 @@ Simple though the algorithm might be, this was *not* easy to implement. But, wit
 <img src="attachments/portfolio/paths_gif.gif" width=""/>
 
 *A few of the tip-to-root paths of the Sverchok tree.*
+
+With the paths identified, I could solidify them by applying a simplified version of the method used by the leaf generator. While solidifying one path is not too hard, doing them all at once was a little tricky.
+
+<img src="attachments/portfolio/solid_tree.png" width=""/>
+
+*"Solidified" Sverchok tree, without redundant paths, which reduces overlapping geometry and improves efficiency* 
+
+On this second pass of the Yucca, along with giving it a trunk, I refined a few things to be simpler or work more how I originally wanted, notably
+
+- Instancing the leaves gradually closer to the tips of their segment as they move towards the endpoints of the tree. I originally had them instancing on the midpoints of their segments, but the tips of the branches poked through the leaves at the tree's endpoints, which I didn't like. 
+- Setting the spread of the leaves along their segment exactly to its length, taking into account where the leaves are instanced along it. 
+
+I also spent some time experimenting with and trying to understand the `.xml` rulesets and got a *little* better at generating shapes predictably, improving (maybe) the leaf material, and creating a useable procedural bark texture. 
+
+<img src="attachments/portfolio/yucca_final_kinda.png" width=""/>
+
+*The most current version of the Yucca tree.* 
+
+This method I developed for creating the Yucca was always meant to be generally applicable to generating plant life, for given parameters, underlying structure, leaves, and so on. 
+
+Though it is effective at producing plants or trees fundamentally different from the Yucca, it needs some attention in the usability department before I would consider it really ready for the community, which is my ultimate goal for it. 
+
+## A Composition 
+In one of their videos, [Erindale Woodford](https://www.youtube.com/channel/UCGMyyn2FdEFcDfP1wQRh5lQ) imparted an interesting piece of advice: that one should practice 3D art not just by making assets alone (which is a common "trap"), but by creating a complete composition, much as one might in another discipline, such as photography or painting. After hearing this suggestion, it became a goal of mine to do so, and to include the Yucca in it somehow. 
+
+For better or worse, I came up with this: 
+
+<img src="attachments/portfolio/60WL_20WR_2_Long_A.png" width=""/>
+
+*A completed artwork I made to mark the end of approximately one year working in Blender. Untitled, for the moment.* 
+
+The theme of this piece is that as 3D artists we often and inadvertently create absurd scenarios: a perfect sphere textured in bathroom tile set upon a desert xeriscape, or conversely, perhaps a Yucca plant growing out of a patch of dirt set upon a photo studio backdrop, and so on. 
+
+This is by no means necessarily a unique idea, but I wanted this composite to involve elements that would not feel out of place in other scenes, but put together create something strange, which offers some contrast with other absurdist pieces that I have often seen be quick to dive entirely into the realm of the impossible. 
+
+I wanted this piece to *conceivably* be something an artist could *accidentally* construct, while exploring and testing ideas meant for other works. 
+
+## Procedure
+The Yucca was without a doubt the most complicated part in this piece to accomplish, but its major points have already been gone over earlier in this document. 
+
+### The Desk
+#
+<img src="attachments/portfolio/desk_pic.png" width=""/>
+
+*Close-up of the desk. Modeled in SolidWorks, and textured procedurally in Blender. The woods are Cherry (lighter) and Walnut (darker)* 
+
+The desk is a design I came up with a few years ago that I have the goal of actually building some day, though my amateur woodworking skills may need some improvement yet before I would consider myself capable of executing it well. 
+
+I modelled the desk in SolidWorks, and exported its components as `.obj` files into Blender, much as I did with the [Keycaps](#keycaps-redux-solidworks-and-python). One notable issue I had was that because the desk is made up of multiple parts, any change involved manually re-exporting each piece, which I decided was too cumbersome to do regularly. To resolve this problem, I wrote a SolidWorks script that ran the `.obj` exporter plugin for each visible object in the model (which, in [Microsoft Visual Basic](https://help.solidworks.com/2019/english/api/sldworksapiprogguide/GettingStarted/Visual_Basic_.NET_Standalone_and_Add-in_Applications.htm), was not so easy to get working).
+
+I encountered a similar issue on the Blender side, which has no way of batch-importing `.obj` files. So, to resolve *this* problem, I wrote a tiny Python plugin for Blender that allows one to select a directory and load all of the `.obj` files in it. 
+
+<img src="attachments/portfolio/obj_load_fig.gif" width=""/>
+
+*Simple Python plugin I wrote for Blender that allows one to select a directory and automatically load all of the `.obj` files in it.* 
+
+### The Cardboard Box and Picture Frame
+#
+The cardboard box and picture frame are both [hard-surface/subdivision](http://wiki.polycount.com/wiki/Subdivision_Surface_Modeling) models, which I took the time to do carefully expressly for the purposes of practice. The cardboard box was textured (mostly) procedurally, with a little manual texture painting for the tape. 
+ 
+<img src="attachments/portfolio/cardboard_box.png" width=""/>
+
+*The cardboard surface and inseam materials are both procedural, while the tape was hand-painted onto the box's UV map to control roughness directly.*
+
+<img src="attachments/portfolio/picture_frame.png" width=""/>
+
+*The frame is a basic hard-surface model, textured with very simple procedural materials.*
+
+### Packing Peanuts
+# 
+The packing peanuts pouring out of the cardboard box I achieved using geometry nodes, one of only a few minor successes I have had using them.
+
+Essentially, the original peanut models (both handmade) are distributed onto what amount to two, separate, parametrically distorted cylinders. 
+
+<img src="attachments/portfolio/peanuts.png" width=""/>
+
+
+*Packing peanuts, "poured" out of the cardboard box by using geometry nodes to distribute the peanut models onto two different shapes, both also made in geometry nodes. Packing peanuts themselves were hand modeled.*
+
+<img src="attachments/portfolio/gn_scatter_objects.png" width=""/>
+
+*Highly distorted cylinders (looking very...tongue-like) for instancing the packing peanuts onto.* 
+
+### Dirt Pile 
+# 
+
+The ground the Yucca grows out of is nothing more than sculpted planes with two PBR dirt materials applied and mixed using a simplified version of [this un-tiling method](https://www.youtube.com/watch?v=ve3TXCuwoKo&t=156s). The illusion of scattered dirt is achieved by positioning the planes on the boundary of the floor, so that the adaptive displacement geometry just barely pokes through in a random places.
+
+<img src="attachments/portfolio/dirt_pile.png" width=""/>
+
+*The pile of dirt, basically sculpted planes with PBR textures applied and adaptive displacement.* 
+
+## Concluding Thoughts 
+- Really spending a full year "getting to know" Blender fulfilled a longtime goal of mine (not that I am planning on stopping or anything). 
+- I can't believe I hadn't gotten into proceduralism before, nor did I expect to become as obsessed with it as I did. 
+- I am further surprised having closed out the year with completed works *and* proud of what I have accomplished.
+- Cliché as it is, I am looking forward to another year of surprises and learning, and having no idea what I will get up to next. 
+- If you have read up to this point, thank you for your time. You can go now. 

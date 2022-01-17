@@ -77,6 +77,9 @@
   - [Quilla [Black Wick Mix]](https://milieumusic.bandcamp.com/track/quilla-black-wick-mix)
   - [Dusk Treader](https://milieumusic.bandcamp.com/track/dusk-treader)
   - [Bank A1​.​3](https://milieumusic.bandcamp.com/track/bank-a13)
+  - [Pale Blue Beats](https://milieumusic.bandcamp.com/track/pale-blue-beats-2)
+  - [Soapwater Patrol](https://milieumusic.bandcamp.com/track/soapwater-patrol)
+  - [The Ballad Of The Continental Flood](https://milieumusic.bandcamp.com/track/the-ballad-of-the-continental-flood)  
 
 
 ### House? : O.G. house, possibly deserves it's own section? 
