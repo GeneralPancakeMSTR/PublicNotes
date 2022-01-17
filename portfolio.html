@@ -261,16 +261,16 @@ aside > *:last-child {
 <h2 id="returning-to-the-yucca">Returning to the Yucca</h2>
 <p>Having gotten the leaves working about the way I wanted, the next step for the Yucca from where I left off was giving it a body, or trunk. I had already experimented with relatively simple things, for example instancing cylinders on each segment, or using the skin modifier, but both had issues significant enough that I wanted to explore other approaches.</p>
 <img src="attachments/portfolio/trunk_experiments.png" width=""/>
-<p><em>Experiments in constructing a trunk (Left: cylinders instanced on each segment; Right: application of the skin modifier), neither satisfactory.</em></p>
-<p>The approach I wanted to get working was identifying paths of the tree's segments that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm</p>
+<p><em>Experiments in constructing a trunk, neither satisfactory (Left: cylinders instanced on each segment; Right: application of the skin modifier).</em></p>
+<p>What I wanted to try was identifying segment paths through the tree that start at its tips and end at its root, preferably without overlap. Eventually, after some time thinking about it, I came up with the following algorithm</p>
 <ul>
 <li>Sort the endpoint vertex indexes (which I had previously identified) in descending order.
 <ul>
-<li>This operates under the assumption that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending lengths.</li>
-<li>Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model.</li>
+<li>This assumes that vertices with larger indexes are generally further from the root of the tree, and thus their paths from it longer. It follows that if we begin our search with these vertices, we should map the paths approximately in the order of descending length.</li>
+<li>Hopefully, this results in our mapping the tree's absolutely longest path, which should add realism to the model by giving it at least one, continuous &quot;trunk&quot; that spans the entire tree.</li>
 </ul>
 </li>
-<li>Starting from a tip vertex, move to the line whose tip index is the current line's root index.
+<li>Starting from a tip vertex, move to the line whose <strong>tip</strong> index is the <strong>current</strong> line's <strong>root</strong> index.
 <ul>
 <li>This avoids taking an invalid path at junctions because only the originating line has the junction's index as its <strong>tip</strong>, where the other segments share it as their <strong>root</strong>.</li>
 </ul>
@@ -282,6 +282,66 @@ aside > *:last-child {
 <p>Simple though the algorithm might be, this was <em>not</em> easy to implement. But, with a <em>lot</em> of effort and troubleshooting, I was able to get it working.</p>
 <img src="attachments/portfolio/paths_gif.gif" width=""/>
 <p><em>A few of the tip-to-root paths of the Sverchok tree.</em></p>
+<p>With the paths identified, I could solidify them by applying a simplified version of the method used by the leaf generator. While solidifying one path is not too hard, doing them all at once was a little tricky.</p>
+<img src="attachments/portfolio/solid_tree.png" width=""/>
+<p><em>&quot;Solidified&quot; Sverchok tree, without redundant paths, which reduces overlapping geometry and improves efficiency</em></p>
+<p>On this second pass of the Yucca, along with giving it a trunk, I refined a few things to be simpler or work more how I originally wanted, notably</p>
+<ul>
+<li>Instancing the leaves gradually closer to the tips of their segment as they move towards the endpoints of the tree. I originally had them instancing on the midpoints of their segments, but the tips of the branches poked through the leaves at the tree's endpoints, which I didn't like.</li>
+<li>Setting the spread of the leaves along their segment exactly to its length, taking into account where the leaves are instanced along it.</li>
+</ul>
+<p>I also spent some time experimenting with and trying to understand the <code>.xml</code> rulesets and got a <em>little</em> better at generating shapes predictably, improving (maybe) the leaf material, and creating a useable procedural bark texture.</p>
+<img src="attachments/portfolio/yucca_final_kinda.png" width=""/>
+<p><em>The most current version of the Yucca tree.</em></p>
+<p>This method I developed for creating the Yucca was always meant to be generally applicable to generating plant life, for given parameters, underlying structure, leaves, and so on.</p>
+<p>Though it is effective at producing plants or trees fundamentally different from the Yucca, it needs some attention in the usability department before I would consider it really ready for the community, which is my ultimate goal for it.</p>
+<h2 id="a-composition">A Composition</h2>
+<p>In one of their videos, <a href="https://www.youtube.com/channel/UCGMyyn2FdEFcDfP1wQRh5lQ">Erindale Woodford</a> imparted an interesting piece of advice: that one should practice 3D art not just by making assets alone (which is a common &quot;trap&quot;), but by creating a complete composition, much as one might in another discipline, such as photography or painting. After hearing this suggestion, it became a goal of mine to do so, and to include the Yucca in it somehow.</p>
+<p>For better or worse, I came up with this:</p>
+<img src="attachments/portfolio/60WL_20WR_2_Long_A.png" width=""/>
+<p><em>A completed artwork I made to mark the end of approximately one year working in Blender. Untitled, for the moment.</em></p>
+<p>The theme of this piece is that as 3D artists we often and inadvertently create absurd scenarios: a perfect sphere textured in bathroom tile set upon a desert xeriscape, or conversely, perhaps a Yucca plant growing out of a patch of dirt set upon a photo studio backdrop, and so on.</p>
+<p>This is by no means necessarily a unique idea, but I wanted this composite to involve elements that would not feel out of place in other scenes, but put together create something strange, which offers some contrast with other absurdist pieces that I have often seen be quick to dive entirely into the realm of the impossible.</p>
+<p>I wanted this piece to <em>conceivably</em> be something an artist could <em>accidentally</em> construct, while exploring and testing ideas meant for other works.</p>
+<h2 id="procedure">Procedure</h2>
+<p>The Yucca was without a doubt the most complicated part in this piece to accomplish, but its major points have already been gone over earlier in this document.</p>
+<h3 id="the-desk">The Desk</h3>
+<h1 id=""></h1>
+<img src="attachments/portfolio/desk_pic.png" width=""/>
+<p><em>Close-up of the desk. Modeled in SolidWorks, and textured procedurally in Blender. The woods are Cherry (lighter) and Walnut (darker)</em></p>
+<p>The desk is a design I came up with a few years ago that I have the goal of actually building some day, though my amateur woodworking skills may need some improvement yet before I would consider myself capable of executing it well.</p>
+<p>I modelled the desk in SolidWorks, and exported its components as <code>.obj</code> files into Blender, much as I did with the <a href="#keycaps-redux-solidworks-and-python">Keycaps</a>. One notable issue I had was that because the desk is made up of multiple parts, any change involved manually re-exporting each piece, which I decided was too cumbersome to do regularly. To resolve this problem, I wrote a SolidWorks script that ran the <code>.obj</code> exporter plugin for each visible object in the model (which, in <a href="https://help.solidworks.com/2019/english/api/sldworksapiprogguide/GettingStarted/Visual_Basic_.NET_Standalone_and_Add-in_Applications.htm">Microsoft Visual Basic</a>, was not so easy to get working).</p>
+<p>I encountered a similar issue on the Blender side, which has no way of batch-importing <code>.obj</code> files. So, to resolve <em>this</em> problem, I wrote a tiny Python plugin for Blender that allows one to select a directory and load all of the <code>.obj</code> files in it.</p>
+<img src="attachments/portfolio/obj_load_fig.gif" width=""/>
+<p><em>Simple Python plugin I wrote for Blender that allows one to select a directory and automatically load all of the <code>.obj</code> files in it.</em></p>
+<h3 id="the-cardboard-box-and-picture-frame">The Cardboard Box and Picture Frame</h3>
+<h1 id="-1"></h1>
+<p>The cardboard box and picture frame are both <a href="http://wiki.polycount.com/wiki/Subdivision_Surface_Modeling">hard-surface/subdivision</a> models, which I took the time to do carefully expressly for the purposes of practice. The cardboard box was textured (mostly) procedurally, with a little manual texture painting for the tape.</p>
+<img src="attachments/portfolio/cardboard_box.png" width=""/>
+<p><em>The cardboard surface and inseam materials are both procedural, while the tape was hand-painted onto the box's UV map to control roughness directly.</em></p>
+<img src="attachments/portfolio/picture_frame.png" width=""/>
+<p><em>The frame is a basic hard-surface model, textured with very simple procedural materials.</em></p>
+<h3 id="packing-peanuts">Packing Peanuts</h3>
+<h1 id="-2"></h1>
+<p>The packing peanuts pouring out of the cardboard box I achieved using geometry nodes, one of only a few minor successes I have had using them.</p>
+<p>Essentially, the original peanut models (both handmade) are distributed onto what amount to two, separate, parametrically distorted cylinders.</p>
+<img src="attachments/portfolio/peanuts.png" width=""/>
+<p><em>Packing peanuts, &quot;poured&quot; out of the cardboard box by using geometry nodes to distribute the peanut models onto two different shapes, both also made in geometry nodes. Packing peanuts themselves were hand modeled.</em></p>
+<img src="attachments/portfolio/gn_scatter_objects.png" width=""/>
+<p><em>Highly distorted cylinders (looking very...tongue-like) for instancing the packing peanuts onto.</em></p>
+<h3 id="dirt-pile">Dirt Pile</h3>
+<h1 id="-3"></h1>
+<p>The ground the Yucca grows out of is nothing more than sculpted planes with two PBR dirt materials applied and mixed using a simplified version of <a href="https://www.youtube.com/watch?v=ve3TXCuwoKo&amp;t=156s">this un-tiling method</a>. The illusion of scattered dirt is achieved by positioning the planes on the boundary of the floor, so that the adaptive displacement geometry just barely pokes through in a random places.</p>
+<img src="attachments/portfolio/dirt_pile.png" width=""/>
+<p><em>The pile of dirt, basically sculpted planes with PBR textures applied and adaptive displacement.</em></p>
+<h2 id="concluding-thoughts">Concluding Thoughts</h2>
+<ul>
+<li>Really spending a full year &quot;getting to know&quot; Blender fulfilled a longtime goal of mine (not that I am planning on stopping or anything).</li>
+<li>I can't believe I hadn't gotten into proceduralism before, nor did I expect to become as obsessed with it as I did.</li>
+<li>I am further surprised having closed out the year with completed works <em>and</em> proud of what I have accomplished.</li>
+<li>Cliché as it is, I am looking forward to another year of surprises and learning, and having no idea what I will get up to next.</li>
+<li>If you have read up to this point, thank you for your time. You can go now.</li>
+</ul>
 
     </body>
     </html>
