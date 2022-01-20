@@ -1,3 +1,25 @@
+- [Early Work](#early-work)
+- [A Year in Blender](#a-year-in-blender)
+  - [Starting Out](#starting-out)
+  - [The Donut](#the-donut)
+  - [Experiments in Texturing and Displacement](#experiments-in-texturing-and-displacement)
+  - [Keycaps Redux, SolidWorks, and Python](#keycaps-redux-solidworks-and-python)
+  - [Sverchok and Phyllotaxis](#sverchok-and-phyllotaxis)
+  - [L-Systems](#l-systems)
+  - [Art Installation Render for a Friend](#art-installation-render-for-a-friend)
+  - [Nodevember](#nodevember)
+    - [Nodevember: "Colors"](#nodevember-colors)
+    - [Nodevember: "Spherical Harmonics"](#nodevember-spherical-harmonics)
+  - [Returning to the Yucca](#returning-to-the-yucca)
+  - [A Composition](#a-composition)
+  - [Procedure](#procedure)
+    - [The Desk](#the-desk)
+    - [The Cardboard Box and Picture Frame](#the-cardboard-box-and-picture-frame)
+    - [Packing Peanuts](#packing-peanuts)
+    - [Dirt Pile](#dirt-pile)
+  - [Concluding Thoughts](#concluding-thoughts)
+- [About Me](#about-me)
+
 # Early Work 
 I have been a long time hobbyist 3D modeler, having used Sketchup (extensively), 3DS Max, and Fusion 360. 
 <img src="attachments/portfolio/Starship.jpg" width=""/>
@@ -172,8 +194,24 @@ This work led to one of my prouder moments of 2021, which was being given the op
 
 A recreation of this [stream](https://www.youtube.com/watch?v=eq1qc2pnljk) (I failed to record the original with audio) can be found on my youtube channel, along with a [Part 2](https://www.youtube.com/watch?v=dJuDzoXgWuA) that covers some further details. I also have written versions of these videos covering roughly the same material, that may be viewed on my Github ([part 1](https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems.md) and [part 2](https://github.com/GeneralPancakeMSTR/PublicNotes/blob/main/lsystems_part2.md)).
 
+## Art Installation Render for a Friend 
+A personal friend of mine conceived of and constructed an artwork as a submission for a local artists festival called [**Currents**](https://currentsnewmedia.org/submission-guidelines-2022/). For part of his application, he requested that I render a mockup, roughly as the piece would look as an exhibit.
+
+<img src="attachments/portfolio/synchrony_rerender_17mm.png" width=""/>
+
+*"Synchrony" art installation model, rendered for a friend's application to local artists festival "[Currents](https://currentsnewmedia.org/submission-guidelines-2022/)." Read about the artist [here](http://shanexcoffing.github.io/).*
+
+In the real artwork, the disks rotate and a bulb behind them illuminates while it is open to their windows. When I first made the model, I was not able to animate, well, at all really, let alone to this effect. But I revisited the model for this review and got it animating as it does in reality, which I had wanted to do since I had originally worked on it. 
+
+<video height="400" controls>
+    <source src="attachments/portfolio/shane_installation_medium_dark.mp4" type=video/mp4>
+</video>
+
+*Synchrony artwork animation.*
+
+
 ## Nodevember
-[Nodevember](https://nodevember.io/) is a community driven challenge that occurs in the month of November (surprise) to use procedural techniques to complete artwork from a daily (or in the case of 2021, bi-daily) prompt. I took a break from the Yucca to make a few pieces for this year's (2021) event, two of which I am especially pleased with. Both of these pieces were made largely in Sverchok.
+[Nodevember](https://nodevember.io/) is a community driven challenge that occurs in the month of November (surprise) to use procedural techniques to complete artwork from a daily (or in the case of 2021, bi-daily) prompt. I risked making a few pieces for this year's (2021) event, two of which I ended up especially pleased with. Both of these pieces were done largely in Sverchok.
 
 ### Nodevember: "Colors"
 <video height="400" controls>
@@ -328,3 +366,10 @@ The ground the Yucca grows out of is nothing more than sculpted planes with two 
 - I am further surprised having closed out the year with completed works *and* proud of what I have accomplished.
 - Cliché as it is, I am looking forward to another year of surprises and learning, and having no idea what I will get up to next. 
 - If you have read up to this point, thank you for your time. You can go now. 
+
+# About Me 
+I am a 31 year old amateur 3D artist living in the American Southwest. I have a Masters degree in computational physics, a passion for Python (and programming in general), and enjoy other hobbies such as woodworking and machining. I have a great interest in and appreciation for design, especially optimizing products for performance and simplicity.
+
+I am also fascinated by the natural world, and sought an education in physics in pursuit of understanding it. Over the course of doing so, I developed foundations in mathematics, programming, and computational methods. 
+
+I aspire to contribute to the sustainability and stability of society, hopefully creating interesting things along the way. You can typically find me equal parts enthralled and frustrated trying to solve some obscure problem.
