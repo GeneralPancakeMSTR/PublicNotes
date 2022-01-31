@@ -360,6 +360,19 @@ The ground the Yucca grows out of is nothing more than sculpted planes with two 
 
 *The pile of dirt, basically sculpted planes with PBR textures applied and adaptive displacement.* 
 
+### Feedback 
+# 
+- studios flip pieces left to right. wtf? why? 
+  - "Breaking the bias." Basically way of looking at your art in a new way. 
+- memory growing out of picture frame. Mystery there. 
+- Improvements 
+  - Background could be more flat. 
+  - Looked like a completely flat empty nothingness. Totally fair criticism. 
+  - Not movement with packing peanuts. Standing on desk and on floor. 
+  - Shadow on ground seems possibly too sharp. 
+  - Start in blackness and go from there. 
+  - 
+
 ## Concluding Thoughts 
 - Really spending a full year "getting to know" Blender fulfilled a longtime goal of mine (not that I am planning on stopping or anything). 
 - I can't believe I hadn't gotten into proceduralism before, nor did I expect to become as obsessed with it as I did. 

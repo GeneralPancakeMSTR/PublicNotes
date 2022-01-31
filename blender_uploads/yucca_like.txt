@@ -1,0 +1,40 @@
+<!-- So this is working pretty damn well. 
+The spiral rules, despite their name, just generate a line segment at a random angle from the last. 
+Then, the successor rule places the 120 tree at the end of the line segments, for however many iterations you specify. 
+You can get multiple "roots" by enabling the spiral rz 180 rule. 
+The number or roots is determined by the weight disparity between the two segment spiral rules and the rz 180 one (root_weight). 
+Disable the rz 180 rule to only have one root.  -->
+<rules max_depth="1000">
+    <rule name="entry">
+        <call rule="spiral"/>
+    </rule>
+    <rule name="spiral" weight="{root_weight}" max_depth="{depth}" successor="R2">
+        <call transforms="tz {segment_length} rz {random_angle} ry {random_angle} rx {random_angle} sa 1" rule="spiral"/>        
+        <!-- <call transforms="tz {segment_length} rz 120 rx {angle} sa 1" rule="spiral"/>
+        <call transforms="tz {segment_length} rz -120 rx {angle} sa 1" rule="spiral"/> -->
+        <call rule="instance"/>
+    </rule>
+    <rule name="spiral" weight="{root_weight}" max_depth="{depth}" successor="R2">
+        <call transforms="tz {segment_length} rz -{random_angle} ry -{random_angle} rx -{random_angle} sa 1" rule="spiral"/>
+        <call rule="instance"/>
+    </rule>
+    <!-- <rule name="spiral" weight="1" max_depth="{depth}" successor="R2">
+        <call rule="spiral"/>
+        <call transforms="rz 180" rule="spiral"/>        
+    </rule> -->
+    <rule name="R2">
+        <call transforms="tz 0 sa 1" rule="R3"/>
+        <call rule="instance"/>
+    </rule>
+    <rule name="R3" max_depth="{R3_depth}">        
+        <call transforms="tz {segment_length} rz 0 rx {tip_angle} sa {tip_scale}" rule="R3"/>
+        <call transforms="tz {segment_length} rz 120 rx {tip_angle} sa {tip_scale}" rule="R3"/>
+        <call transforms="tz {segment_length} rz -120 rx {tip_angle} sa {tip_scale}" rule="R3"/>        
+        <call rule="instance"/>        
+    </rule>
+    <rule name="instance">
+        <instance transforms="rz 0 tz 0 sa 1" shape="vertex"/>        
+    </rule>
+</rules>
+
+
