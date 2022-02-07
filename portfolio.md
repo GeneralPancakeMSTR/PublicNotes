@@ -380,6 +380,24 @@ The ground the Yucca grows out of is nothing more than sculpted planes with two 
 - Cliché as it is, I am looking forward to another year of surprises and learning, and having no idea what I will get up to next. 
 - If you have read up to this point, thank you for your time. You can go now. 
 
+
+# Portfolio Suggestions 
+- Story and impact. 
+  - https://monicaeggert.com/
+  - https://twitter.com/JLHGameArt/status/1488987343512125442
+  - https://xy-zak.xyz/
+  - https://vimeo.com/7809605
+- Show that you are efficient, know what you're doing, comprehension, experienced. 
+- How do you deal with adding music to your reels etc.?
+  - https://www.epidemicsound.com/
+  - Also Draise never watches a reel with audio. 
+- Networking and talking directly is like the most effective way to get work. 
+- Emailing directly: 
+  - "I just attached a CV and wrote a little blurb about how I liked their work and asked a bit about one of their projects to trigger a conversation. Then they know you're willing and interested and they have some reason to respond." -Erin 
+- Create a video about a particular project, not just all of them, necessarily. E.g. just on rigging, just on Sverchok, etc. 
+- Understand the client you are applying to, like what do they need? 
+
+
 # About Me 
 I am a 31 year old amateur 3D artist living in the American Southwest. I have a Masters degree in computational physics, a passion for Python (and programming in general), and enjoy other hobbies such as woodworking and machining. I have a great interest in and appreciation for design, especially optimizing products for performance and simplicity.
 
